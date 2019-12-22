@@ -1,0 +1,54 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+# Displays the configurator in bookmarks bar
+panel_iframe:
+  tasmoadmin:
+    title: Tasmo Admin
+    icon: mdi:lightbulb-on
+    url: !secret my_hassio_tasmo_url
+    
+  mdiindex:
+    title: MDI Icon Index
+    icon: mdi:vector-square
+    url: https://cdn.rawgit.com/james-fry/home-assistant-mdi/efd95d7a/home-assistant-mdi.html
+  
+  ide:
+    title: IDE
+    icon: mdi:code-braces
+    url: !secret my_hassio_ide_url 
+
+mqtt:
+  broker: !secret my_mqtt_url
+  username: !secret my_mqtt_local_uid
+  password: !secret my_mqtt_local_pwd
+
+device_tracker:
+  - platform: nmap_tracker
+    #hosts: 192.168.1.0/24
+    hosts: 
+      - 192.168.1.196
+      - 192.168.1.190
+    home_interval: 10
+    interval_seconds: 30
+    new_device_defaults:
+      track_new_devices: false
+      hide_if_away: false
+
+binary_sensor: !include rfsensors.yaml
+sensor: !include sensors.yaml    
+switch: !include switches.yaml
+climate: !include climates.yaml
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+notify: !include notify.yaml

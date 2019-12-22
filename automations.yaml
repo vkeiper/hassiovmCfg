@@ -1,0 +1,118 @@
+# VGK, setup coal boiler sensor and swith states
+- alias: "Power state on HA start-up"
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "sonoffs/cmnd/state"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: sonoffs/cmnd/POWER
+    - service: mqtt.publish
+      data:
+        topic: sonoffs/cmnd/POWER1
+    - service: mqtt.publish
+      data:
+        topic: sonoffs/cmnd/POWER2
+    - service: mqtt.publish
+      data:
+        topic: sonoffs/cmnd/POWER3
+    - service: mqtt.publish
+      data:
+        topic: sonoffs/cmnd/POWER4
+
+# PIR RF433 sensors
+- alias: Reset masterBath PIR state
+  hide_entity: true
+  initial_state: 'on'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.masterBath_motion
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 5
+  action:
+  - service: mqtt.publish
+    data:
+      topic: tasRF2WIFI_1/tele/RESULT
+      payload: EEA3AEoff
+  - service: notify.pushbullet
+    data_template:
+      #vgk, keeping id same prevents new notification boxes, just updates data
+      #notification_id: '1000'
+      title: "ALERT --Motion Detected"
+      message: "In Master Bathroom"
+      
+# Notify on boiler fault
+- alias: BoilerH2OUndertemp
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.4rly_2tsns_1_temp_water
+    below: 120
+  action:
+    service: notify.pushbullet
+    data_template:
+      #vgk, keeping id same prevents new notification boxes, just updates data
+      notification_id: '1000'
+      title: "ALERT --Boiler Water undertemp error"
+      message: "Heat may not maintain set point because water temp is {{ states('sensor.4rly_2tsns_1_temp_water') }} degrees. Should be >120"
+      
+# Notify on boiler water undertemp fault clear
+- alias: BoilerH2OInRange
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.4rly_2tsns_1_temp_water
+    above: 170
+  action:
+    service: notify.pushbullet
+    data_template:
+      #vgk, keeping id same prevents new notification boxes, just updates data
+      notification_id: '1001'
+      title: "ALERT --Boiler Water Within Range"
+      message: "Heat can now maintain set point. Water is {{ states('sensor.4rly_2tsns_1_temp_water') }} degrees. Should be >120 && <170"
+      
+# Notify on boiler water undertemp fault clear
+  # - alias: Fan off after AC off
+  #   trigger:
+  #     - platform: state
+  #       entity_id: switch.floor2_ac
+  #       to: "off"
+  #   action:
+  #     - delay: 0:20
+  #     - service: switch.turn_off
+  #       entity_id: switch.floor2_outside_air_fan
+  # - alias: Fan off after Heat off
+  #   trigger:
+  #     - platform: state
+  #       entity_id: switch.floor2_heat
+  #       to: "off"
+  #   action:
+  #     - delay: 0:20
+  #     - service: switch.turn_off
+  #       entity_id: switch.floor2_outside_air_fan
+ 
+  # - alias: No AC when the Heat is on
+  #   trigger:
+  #     - platform: state
+  #       entity_id: switch.floor2_ac
+  #       to: "on"
+  #   action:
+  #     - service: switch.turn_off
+  #       entity_id: switch.floor2_heat
+  #     - service: switch.turn_on
+  #       entity_id: switch.floor2_outside_air_fan
+
+  # - alias: No Heat when the AC is on
+  #   trigger:
+  #     - platform: state
+  #       entity_id: switch.floor2_heat
+  #       to: "on"
+  #   action:
+  #     - service: switch.turn_off
+  #       entity_id: switch.floor2_ac
+  #     - service: switch.turn_on
+  #       entity_id: switch.floor2_outside_air_fan

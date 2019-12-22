@@ -1,0 +1,10 @@
+# sensors.yaml
+- platform: mqtt
+  state_topic: "tasRF2WIFI_1/tele/RESULT"
+  name: 'masterBath_motion'
+  value_template: '{{value_json.RfReceived.Data}}'
+  payload_on: 'EEA3AE'
+  payload_off: 'EEA3AEoff'
+  device_class: motion
+  qos: 1
+  

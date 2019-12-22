@@ -1,0 +1,534 @@
+2019-12-22 02:21:55 ERROR (Recorder) [homeassistant.components.recorder.util] Error executing query: (sqlite3.DatabaseError) database disk image is malformed
+(Background on this error at: http://sqlalche.me/e/4xp6)
+2019-12-22 02:21:55 ERROR (Recorder) [homeassistant.components.recorder] Error saving event: <Event state_changed[L]: entity_id=device_tracker.vince3, old_state=<state device_tracker.vince3=home; source_type=router, latitude=40.836102965046784, longitude=-75.2517879009247, gps_accuracy=0, scanner=NmapDeviceScanner, ip=192.168.1.190, friendly_name=Dad, entity_picture=https://scontent.fabe1-1.fna.fbcdn.net/v/t31.0-8/p960x960/13147296_1183778151641315_3315026642999382044_o.jpg?_nc_cat=110&_nc_ohc=yLxZDPt1_vgAQlwkZB3Y-oHRjfUm7GSsFov4k6p8CiPm1dNe3LW6VSTTw&_nc_ht=scontent.fabe1-1.fna&oh=8aabb3af7ca66a2a4036eb1967ea95ac&oe=5E7E47D3 @ 2019-12-22T02:19:50.609310-05:00>, new_state=<state device_tracker.vince3=not_home; source_type=router, scanner=NmapDeviceScanner, ip=192.168.1.190, friendly_name=Dad, entity_picture=https://scontent.fabe1-1.fna.fbcdn.net/v/t31.0-8/p960x960/13147296_1183778151641315_3315026642999382044_o.jpg?_nc_cat=110&_nc_ohc=yLxZDPt1_vgAQlwkZB3Y-oHRjfUm7GSsFov4k6p8CiPm1dNe3LW6VSTTw&_nc_ht=scontent.fabe1-1.fna&oh=8aabb3af7ca66a2a4036eb1967ea95ac&oe=5E7E47D3 @ 2019-12-22T02:21:55.042343-05:00>>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py", line 238, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 651, in __connect
+    pool.dispatch.connect(self.connection, self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/event/attr.py", line 261, in __call__
+    fn(*args, **kw)
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 408, in set_sqlite_pragma
+    cursor.execute("PRAGMA journal_mode=WAL")
+sqlite3.DatabaseError: database disk image is malformed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 348, in run
+    session.flush()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2470, in flush
+    self._flush(objects)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2608, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 153, in reraise
+    raise value
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2568, in _flush
+    flush_context.execute()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 213, in save_obj
+    ) in _organize_states_for_save(base_mapper, states, uowtransaction):
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 374, in _organize_states_for_save
+    base_mapper, uowtransaction, states
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 1604, in _connections_for_states
+    connection = uowtransaction.transaction.connection(base_mapper)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 313, in connection
+    return self._connection_for_bind(bind, execution_options)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 419, in _connection_for_bind
+    conn = self._parent._connection_for_bind(bind, execution_options)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 431, in _connection_for_bind
+    conn = bind._contextual_connect()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2239, in _contextual_connect
+    self._wrap_pool_connect(self.pool.connect, None),
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2279, in _wrap_pool_connect
+    e, dialect, self
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1544, in _handle_dbapi_exception_noconnection
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 398, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 152, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py", line 238, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 651, in __connect
+    pool.dispatch.connect(self.connection, self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/event/attr.py", line 261, in __call__
+    fn(*args, **kw)
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 408, in set_sqlite_pragma
+    cursor.execute("PRAGMA journal_mode=WAL")
+sqlalchemy.exc.DatabaseError: (sqlite3.DatabaseError) database disk image is malformed
+(Background on this error at: http://sqlalche.me/e/4xp6)
+2019-12-22 02:21:55 ERROR (Recorder) [homeassistant.components.recorder.util] Error executing query: (sqlite3.DatabaseError) database disk image is malformed
+(Background on this error at: http://sqlalche.me/e/4xp6)
+2019-12-22 02:21:55 ERROR (Recorder) [homeassistant.components.recorder] Error saving event: <Event state_changed[L]: entity_id=device_tracker.denisa, old_state=<state device_tracker.denisa=home; source_type=router, latitude=40.836102965046784, longitude=-75.2517879009247, gps_accuracy=0, scanner=NmapDeviceScanner, ip=192.168.1.196, friendly_name=Mom, entity_picture=https://scontent.fabe1-1.fna.fbcdn.net/v/t1.0-9/14329997_2004324906460583_7470747664482347618_n.jpg?_nc_cat=111&_nc_ohc=2MysxuO3ztoAQls6NKD19WEDjfE8oahck6Erlh2hr7rvUD0cOeMkAh0rw&_nc_ht=scontent.fabe1-1.fna&oh=735dc4b49b41edbd0369fd241c98348a&oe=5EB37086 @ 2019-12-22T02:19:50.635042-05:00>, new_state=<state device_tracker.denisa=not_home; source_type=router, scanner=NmapDeviceScanner, ip=192.168.1.196, friendly_name=Mom, entity_picture=https://scontent.fabe1-1.fna.fbcdn.net/v/t1.0-9/14329997_2004324906460583_7470747664482347618_n.jpg?_nc_cat=111&_nc_ohc=2MysxuO3ztoAQls6NKD19WEDjfE8oahck6Erlh2hr7rvUD0cOeMkAh0rw&_nc_ht=scontent.fabe1-1.fna&oh=735dc4b49b41edbd0369fd241c98348a&oe=5EB37086 @ 2019-12-22T02:21:55.049131-05:00>>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py", line 238, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 651, in __connect
+    pool.dispatch.connect(self.connection, self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/event/attr.py", line 261, in __call__
+    fn(*args, **kw)
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 408, in set_sqlite_pragma
+    cursor.execute("PRAGMA journal_mode=WAL")
+sqlite3.DatabaseError: database disk image is malformed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 348, in run
+    session.flush()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2470, in flush
+    self._flush(objects)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2608, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 153, in reraise
+    raise value
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2568, in _flush
+    flush_context.execute()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 213, in save_obj
+    ) in _organize_states_for_save(base_mapper, states, uowtransaction):
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 374, in _organize_states_for_save
+    base_mapper, uowtransaction, states
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 1604, in _connections_for_states
+    connection = uowtransaction.transaction.connection(base_mapper)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 313, in connection
+    return self._connection_for_bind(bind, execution_options)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 419, in _connection_for_bind
+    conn = self._parent._connection_for_bind(bind, execution_options)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 431, in _connection_for_bind
+    conn = bind._contextual_connect()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2239, in _contextual_connect
+    self._wrap_pool_connect(self.pool.connect, None),
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2279, in _wrap_pool_connect
+    e, dialect, self
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1544, in _handle_dbapi_exception_noconnection
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 398, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 152, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py", line 238, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 651, in __connect
+    pool.dispatch.connect(self.connection, self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/event/attr.py", line 261, in __call__
+    fn(*args, **kw)
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 408, in set_sqlite_pragma
+    cursor.execute("PRAGMA journal_mode=WAL")
+sqlalchemy.exc.DatabaseError: (sqlite3.DatabaseError) database disk image is malformed
+(Background on this error at: http://sqlalche.me/e/4xp6)
+2019-12-22 02:21:56 ERROR (Recorder) [homeassistant.components.recorder.util] Error executing query: (sqlite3.DatabaseError) database disk image is malformed
+(Background on this error at: http://sqlalche.me/e/4xp6)
+2019-12-22 02:21:56 ERROR (Recorder) [homeassistant.components.recorder] Error saving event: <Event state_changed[L]: entity_id=group.all_devices, old_state=<state group.all_devices=home; entity_id=('device_tracker.vince3', 'device_tracker.denisa'), order=1, auto=True, friendly_name=all devices, hidden=True @ 2019-12-22T02:19:50.616318-05:00>, new_state=<state group.all_devices=not_home; entity_id=('device_tracker.vince3', 'device_tracker.denisa'), order=1, auto=True, friendly_name=all devices, hidden=True @ 2019-12-22T02:21:55.080938-05:00>>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py", line 238, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 651, in __connect
+    pool.dispatch.connect(self.connection, self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/event/attr.py", line 261, in __call__
+    fn(*args, **kw)
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 408, in set_sqlite_pragma
+    cursor.execute("PRAGMA journal_mode=WAL")
+sqlite3.DatabaseError: database disk image is malformed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 348, in run
+    session.flush()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2470, in flush
+    self._flush(objects)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2608, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 153, in reraise
+    raise value
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2568, in _flush
+    flush_context.execute()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 213, in save_obj
+    ) in _organize_states_for_save(base_mapper, states, uowtransaction):
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 374, in _organize_states_for_save
+    base_mapper, uowtransaction, states
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 1604, in _connections_for_states
+    connection = uowtransaction.transaction.connection(base_mapper)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 313, in connection
+    return self._connection_for_bind(bind, execution_options)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 419, in _connection_for_bind
+    conn = self._parent._connection_for_bind(bind, execution_options)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 431, in _connection_for_bind
+    conn = bind._contextual_connect()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2239, in _contextual_connect
+    self._wrap_pool_connect(self.pool.connect, None),
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2279, in _wrap_pool_connect
+    e, dialect, self
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1544, in _handle_dbapi_exception_noconnection
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 398, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 152, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py", line 238, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 651, in __connect
+    pool.dispatch.connect(self.connection, self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/event/attr.py", line 261, in __call__
+    fn(*args, **kw)
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 408, in set_sqlite_pragma
+    cursor.execute("PRAGMA journal_mode=WAL")
+sqlalchemy.exc.DatabaseError: (sqlite3.DatabaseError) database disk image is malformed
+(Background on this error at: http://sqlalche.me/e/4xp6)
+2019-12-22 02:21:56 ERROR (Recorder) [homeassistant.components.recorder.util] Error executing query: (sqlite3.DatabaseError) database disk image is malformed
+(Background on this error at: http://sqlalche.me/e/4xp6)
+2019-12-22 02:21:56 ERROR (Recorder) [homeassistant.components.recorder] Error saving event: <Event state_changed[L]: entity_id=device_tracker.vince3, old_state=<state device_tracker.vince3=not_home; source_type=router, scanner=NmapDeviceScanner, ip=192.168.1.190, friendly_name=Dad, entity_picture=https://scontent.fabe1-1.fna.fbcdn.net/v/t31.0-8/p960x960/13147296_1183778151641315_3315026642999382044_o.jpg?_nc_cat=110&_nc_ohc=yLxZDPt1_vgAQlwkZB3Y-oHRjfUm7GSsFov4k6p8CiPm1dNe3LW6VSTTw&_nc_ht=scontent.fabe1-1.fna&oh=8aabb3af7ca66a2a4036eb1967ea95ac&oe=5E7E47D3 @ 2019-12-22T02:21:55.042343-05:00>, new_state=<state device_tracker.vince3=home; source_type=router, latitude=40.836102965046784, longitude=-75.2517879009247, gps_accuracy=0, scanner=NmapDeviceScanner, ip=192.168.1.190, friendly_name=Dad, entity_picture=https://scontent.fabe1-1.fna.fbcdn.net/v/t31.0-8/p960x960/13147296_1183778151641315_3315026642999382044_o.jpg?_nc_cat=110&_nc_ohc=yLxZDPt1_vgAQlwkZB3Y-oHRjfUm7GSsFov4k6p8CiPm1dNe3LW6VSTTw&_nc_ht=scontent.fabe1-1.fna&oh=8aabb3af7ca66a2a4036eb1967ea95ac&oe=5E7E47D3 @ 2019-12-22T02:21:55.682749-05:00>>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py", line 238, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 651, in __connect
+    pool.dispatch.connect(self.connection, self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/event/attr.py", line 261, in __call__
+    fn(*args, **kw)
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 408, in set_sqlite_pragma
+    cursor.execute("PRAGMA journal_mode=WAL")
+sqlite3.DatabaseError: database disk image is malformed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 348, in run
+    session.flush()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2470, in flush
+    self._flush(objects)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2608, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 153, in reraise
+    raise value
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2568, in _flush
+    flush_context.execute()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 213, in save_obj
+    ) in _organize_states_for_save(base_mapper, states, uowtransaction):
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 374, in _organize_states_for_save
+    base_mapper, uowtransaction, states
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 1604, in _connections_for_states
+    connection = uowtransaction.transaction.connection(base_mapper)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 313, in connection
+    return self._connection_for_bind(bind, execution_options)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 419, in _connection_for_bind
+    conn = self._parent._connection_for_bind(bind, execution_options)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 431, in _connection_for_bind
+    conn = bind._contextual_connect()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2239, in _contextual_connect
+    self._wrap_pool_connect(self.pool.connect, None),
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2279, in _wrap_pool_connect
+    e, dialect, self
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1544, in _handle_dbapi_exception_noconnection
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 398, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 152, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py", line 238, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 651, in __connect
+    pool.dispatch.connect(self.connection, self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/event/attr.py", line 261, in __call__
+    fn(*args, **kw)
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 408, in set_sqlite_pragma
+    cursor.execute("PRAGMA journal_mode=WAL")
+sqlalchemy.exc.DatabaseError: (sqlite3.DatabaseError) database disk image is malformed
+(Background on this error at: http://sqlalche.me/e/4xp6)
+2019-12-22 02:21:56 ERROR (Recorder) [homeassistant.components.recorder.util] Error executing query: (sqlite3.DatabaseError) database disk image is malformed
+(Background on this error at: http://sqlalche.me/e/4xp6)
+2019-12-22 02:21:56 ERROR (Recorder) [homeassistant.components.recorder] Error saving event: <Event state_changed[L]: entity_id=group.all_devices, old_state=<state group.all_devices=not_home; entity_id=('device_tracker.vince3', 'device_tracker.denisa'), order=1, auto=True, friendly_name=all devices, hidden=True @ 2019-12-22T02:21:55.080938-05:00>, new_state=<state group.all_devices=home; entity_id=('device_tracker.vince3', 'device_tracker.denisa'), order=1, auto=True, friendly_name=all devices, hidden=True @ 2019-12-22T02:21:55.729778-05:00>>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py", line 238, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 651, in __connect
+    pool.dispatch.connect(self.connection, self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/event/attr.py", line 261, in __call__
+    fn(*args, **kw)
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 408, in set_sqlite_pragma
+    cursor.execute("PRAGMA journal_mode=WAL")
+sqlite3.DatabaseError: database disk image is malformed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 348, in run
+    session.flush()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2470, in flush
+    self._flush(objects)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2608, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 153, in reraise
+    raise value
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2568, in _flush
+    flush_context.execute()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 213, in save_obj
+    ) in _organize_states_for_save(base_mapper, states, uowtransaction):
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 374, in _organize_states_for_save
+    base_mapper, uowtransaction, states
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 1604, in _connections_for_states
+    connection = uowtransaction.transaction.connection(base_mapper)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 313, in connection
+    return self._connection_for_bind(bind, execution_options)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 419, in _connection_for_bind
+    conn = self._parent._connection_for_bind(bind, execution_options)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 431, in _connection_for_bind
+    conn = bind._contextual_connect()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2239, in _contextual_connect
+    self._wrap_pool_connect(self.pool.connect, None),
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2279, in _wrap_pool_connect
+    e, dialect, self
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1544, in _handle_dbapi_exception_noconnection
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 398, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 152, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py", line 238, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 651, in __connect
+    pool.dispatch.connect(self.connection, self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/event/attr.py", line 261, in __call__
+    fn(*args, **kw)
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 408, in set_sqlite_pragma
+    cursor.execute("PRAGMA journal_mode=WAL")
+sqlalchemy.exc.DatabaseError: (sqlite3.DatabaseError) database disk image is malformed
+(Background on this error at: http://sqlalche.me/e/4xp6)
+2019-12-22 02:21:56 ERROR (Recorder) [homeassistant.components.recorder.util] Error executing query: (sqlite3.DatabaseError) database disk image is malformed
+(Background on this error at: http://sqlalche.me/e/4xp6)
+2019-12-22 02:21:56 ERROR (Recorder) [homeassistant.components.recorder] Error saving event: <Event state_changed[L]: entity_id=device_tracker.denisa, old_state=<state device_tracker.denisa=not_home; source_type=router, scanner=NmapDeviceScanner, ip=192.168.1.196, friendly_name=Mom, entity_picture=https://scontent.fabe1-1.fna.fbcdn.net/v/t1.0-9/14329997_2004324906460583_7470747664482347618_n.jpg?_nc_cat=111&_nc_ohc=2MysxuO3ztoAQls6NKD19WEDjfE8oahck6Erlh2hr7rvUD0cOeMkAh0rw&_nc_ht=scontent.fabe1-1.fna&oh=735dc4b49b41edbd0369fd241c98348a&oe=5EB37086 @ 2019-12-22T02:21:55.049131-05:00>, new_state=<state device_tracker.denisa=home; source_type=router, latitude=40.836102965046784, longitude=-75.2517879009247, gps_accuracy=0, scanner=NmapDeviceScanner, ip=192.168.1.196, friendly_name=Mom, entity_picture=https://scontent.fabe1-1.fna.fbcdn.net/v/t1.0-9/14329997_2004324906460583_7470747664482347618_n.jpg?_nc_cat=111&_nc_ohc=2MysxuO3ztoAQls6NKD19WEDjfE8oahck6Erlh2hr7rvUD0cOeMkAh0rw&_nc_ht=scontent.fabe1-1.fna&oh=735dc4b49b41edbd0369fd241c98348a&oe=5EB37086 @ 2019-12-22T02:21:55.771493-05:00>>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py", line 238, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 651, in __connect
+    pool.dispatch.connect(self.connection, self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/event/attr.py", line 261, in __call__
+    fn(*args, **kw)
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 408, in set_sqlite_pragma
+    cursor.execute("PRAGMA journal_mode=WAL")
+sqlite3.DatabaseError: database disk image is malformed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 348, in run
+    session.flush()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2470, in flush
+    self._flush(objects)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2608, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 153, in reraise
+    raise value
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2568, in _flush
+    flush_context.execute()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 213, in save_obj
+    ) in _organize_states_for_save(base_mapper, states, uowtransaction):
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 374, in _organize_states_for_save
+    base_mapper, uowtransaction, states
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 1604, in _connections_for_states
+    connection = uowtransaction.transaction.connection(base_mapper)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 313, in connection
+    return self._connection_for_bind(bind, execution_options)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 419, in _connection_for_bind
+    conn = self._parent._connection_for_bind(bind, execution_options)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 431, in _connection_for_bind
+    conn = bind._contextual_connect()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2239, in _contextual_connect
+    self._wrap_pool_connect(self.pool.connect, None),
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2279, in _wrap_pool_connect
+    e, dialect, self
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1544, in _handle_dbapi_exception_noconnection
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 398, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 152, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py", line 238, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py", line 651, in __connect
+    pool.dispatch.connect(self.connection, self)
+  File "/usr/local/lib/python3.7/site-packages/sqlalchemy/event/attr.py", line 261, in __call__
+    fn(*args, **kw)
+  File "/usr/src/homeassistant/homeassistant/components/recorder/__init__.py", line 408, in set_sqlite_pragma
+    cursor.execute("PRAGMA journal_mode=WAL")
+sqlalchemy.exc.DatabaseError: (sqlite3.DatabaseError) database disk image is malformed
+(Background on this error at: http://sqlalche.me/e/4xp6)

@@ -1,0 +1,49 @@
+## sensors.yaml
+# Start --Temp sensor TASMOTA 4CH RELAY with 2 Temp sensors DS18B20s
+- platform: mqtt
+  name: "4rly_2tsns_1_temp_water"
+  state_topic: "tasmota_4RLY_2TSNS_A/tele/SENSOR"
+  value_template: "{{ value_json['DS18B20-1'].Temperature }}"
+  unit_of_measurement: "°F"
+  availability_topic: "tasmota_4RLY_2TSNS_A/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+- platform: mqtt
+  name: "4rly_2tsns_1_temp_feeder"
+  state_topic: "tasmota_4RLY_2TSNS_A/tele/SENSOR"
+  value_template: "{{ value_json['DS18B20-2'].Temperature }}"
+  unit_of_measurement: "°F"
+  availability_topic: "tasmota_4RLY_2TSNS_A/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  # END --Temp sensor TASMOTA 4CH RELAY with 2 Temp sensors DS18B20s
+  # Start --Temp sensor TASMOTA TH16 1CH RELAY with 1 Temp & 1 RH sensor AM2301 - platform: mqtt
+- platform: mqtt
+  name: "1rly_2tsns_mbrambient"
+  state_topic: "tasRLY1CH_TnBSNS_A/tele/SENSOR"
+  value_template: "{{value_json['AM2301'].Temperature }}"
+  unit_of_measurement: "°F"
+  availability_topic: "tasRLY1CH_TnBSNS_A/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  # END --Temp sensor TASMOTA TH16 1CH RELAY with 1 Temp & 1 RH sensor AM2301
+  # Start --RH sensor TASMOTA TH16 1CH RELAY with 1 Temp & 1 RH sensor AM2301 - platform: mqtt
+- platform: mqtt
+  name: "1rly_2tsns_mbrrh"
+  state_topic: "tasRLY1CH_TnBSNS_A/tele/SENSOR"
+  value_template: "{{value_json['AM2301'].Humidity }}"
+  qos: 0
+  unit_of_measurement: "%" 
+  device_class: humidity
+  availability_topic: "tasRLY1CH_TnBSNS_A/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  # END --RH sensor TASMOTA TH16 1CH RELAY with 1 Temp & 1 RH sensor AM2301
+# system monitorsensor:
+- platform: systemmonitor
+  resources:
+    - type: disk_use_percent
+      arg: /home
+    - type: memory_free
+    
+    

@@ -1,0 +1,19 @@
+## climates.yaml
+# Climate Control Floor 2 Master Bedroom AC\ Outside AIR mode
+#  this is used when outside air is cooler than 50deg F
+- platform: generic_thermostat
+  name:  "masterExtAirCooling"
+  heater: switch.mbrExtCoolFan_pwr
+  target_sensor: sensor.1rly_2tsns_mbrambient
+  min_temp: 40
+  max_temp: 80
+  away_temp: 80
+  target_temp: 52
+  initial_hvac_mode: "off"
+  min_cycle_duration:
+    seconds: 1
+  cold_tolerance: .1
+  hot_tolerance: .5
+  precision: .5
+  # setting this to TRUE treats the heater switch as an AC compresssor drive instead
+  ac_mode: true

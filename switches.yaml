@@ -1,0 +1,93 @@
+## switches.yaml
+# Start TASMOTA 4CH RELAY with 2 Temp sensors DS18B20s
+- platform: mqtt
+  name: "vf3k_mainpwr"
+  state_topic: "tasmota_4RLY_2TSNS_A/stat/POWER1"
+  #value_template: "{{ value_json.StatusSTS.POWER1.STATE }}"
+  command_topic: "tasmota_4RLY_2TSNS_A/cmnd/POWER1"
+  availability_topic: "tasmota_4RLY_2TSNS_A/tele/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "vf3k_combpwr"
+  state_topic: "tasmota_4RLY_2TSNS_A/stat/POWER2"
+  #value_template: "{{ value_json.StatusSTS.POWER2.STATE }}"
+  command_topic: "tasmota_4RLY_2TSNS_A/cmnd/POWER2"
+  availability_topic: "tasmota_4RLY_2TSNS_A/tele/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "vf3k_feederpwr"
+  state_topic: "tasmota_4RLY_2TSNS_A/stat/POWER3"
+  #value_template: "{{ value_json.StatusSTS.POWER3.STATE }}"
+  command_topic: "tasmota_4RLY_2TSNS_A/cmnd/POWER3"
+  availability_topic: "tasmota_4RLY_2TSNS_A/tele/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "vf3k_heatdmd"
+  state_topic: "tasmota_4RLY_2TSNS_A/stat/POWER4"
+  #value_template: "{{ value_json.StatusSTS.POWER4.STATE }}"
+  command_topic: "tasmota_4RLY_2TSNS_A/cmnd/POWER4"
+  availability_topic: "tasmota_4RLY_2TSNS_A/tele/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  # End TASMOTA 4CH RELAY with 2 Temp sensors DS18B20s
+  # Start TASMOTA 1CH RELAY no sensors for master bedroom external air cooling fan
+- platform: mqtt
+  name: "mbrExtCoolFan_pwr"
+  state_topic: "tasRLY1CH_NOSNS_A/stat/POWER"
+  #value_template: "{{ value_json.StatusSTS.POWER.STATE }}"
+  command_topic: "tasRLY1CH_NOSNS_A/cmnd/POWER"
+  availability_topic: "tasRLY1CH_NOSNS_A/tele/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  # END TASMOTA 1CH RELAY no sensors
+  # Start TASMOTA TH16 1CH RELAY with AM2301 temp & RH sensor
+- platform: mqtt
+  name: "tasTH16_1_RLY1"
+  state_topic: "tasRLY1CH_TnBSNS_A/stat/POWER"
+  #value_template: "{{ value_json.StatusSTS.POWER.STATE }}"
+  command_topic: "tasRLY1CH_TnBSNS_A/cmnd/POWER"
+  availability_topic: "tasRLY1CH_TnBSNS_A/tele/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  # END TASMOTA 1CH RELAY no sensors
+  # Start TASMOTA 1CH RELAY no sensors for noise fan
+- platform: mqtt
+  name: "mbrNoiseFan_pwr"
+  state_topic: "tasRLY1CH_NOSNS_B/stat/POWER"
+  #value_template: "{{ value_json.StatusSTS.POWER.STATE }}"
+  command_topic: "tasRLY1CH_NOSNS_B/cmnd/POWER"
+  availability_topic: "tasRLY1CH_NOSNS_B/tele/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  # END TASMOTA 1CH RELAY no sensors
